@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <title>The Color Scheme</title>
+</head>
+<body>
+    <div class="page">
+        <header>
+            <p style="font-size: 1.5rem;">--- Presenting ---</p>
+            <h1>The Color Scheme</h1>
+            <p style="color: var(--user-color);">Created by Aiden Hill & Brandon Mathis</p>
+            <div class="color-formats">
+                <button class="precise clicked">
+                    <svg class="dot" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="8" cy="8" r="6" />
+                    </svg>
+                    <p>Precise</p>
+                </button>
+                <button class="wide">
+                    <svg class="dot" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="8" cy="8" r="6" />
+                    </svg>
+                    <p>Wide</p>
+                </button>
+            </div>
+        </header>
+
+        <div class="root">
+            <div class="left-controls">
+
+            </div>
+            <div class="middle-controls">
+                <div class="control-row">
+                    <button class="add-column">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M5 12h14"/>
+                            <path d="M12 5v14"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="row">
+                    <div class="display" data-column="1"></div>
+                </div>
+                <div class="delete-button-row">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+</html>

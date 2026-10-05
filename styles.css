@@ -1,0 +1,278 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: content-box;
+    font-family: "Inter", Arial, sans-serif;
+    color: oklch(0.923 0.012 20);
+}
+
+:root {
+    --light-gray: oklch(0.272 0 242);
+    --dark-gray: oklch(0.254 0 242);
+    --very-dark-gray: oklch(0.178 0 242);
+
+    --user-color: oklch(0.685 0.147 6);
+
+    --ease-start: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-end: cubic-bezier(0.32, 0, 0.67, 0);
+}
+
+body {
+    height: 100vh;
+    background: repeating-linear-gradient(
+        -45deg,
+        var(--light-gray),
+        var(--light-gray) 30px,
+        var(--dark-gray) 30px,
+        var(--dark-gray) 60px
+    );
+}
+
+.page {
+    display: grid;
+    grid-template-rows: 200px 1fr;
+    height: 100%;
+    margin: 0 5vw;
+}
+
+button,
+input,
+button.add-column {
+    border: none;
+    border-bottom: 1px solid var(--light-gray);
+    background-color: oklch(from var(--very-dark-gray) l c h / 0.95);
+    box-shadow: 1px 2px 2px 2px oklch(0% 0 0 / 0.5) inset;
+}
+
+/* --------------------------------- header --------------------------------- */
+
+header {
+    display: grid;
+    grid-template-rows: 0.25fr 1fr 0.25fr 1fr;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    text-transform: uppercase;
+}
+header h1 {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-weight: 800;
+    color: white;
+    text-shadow: 0px 4px var(--user-color);
+}
+header p {
+    justify-self: center;
+    width: fit-content;
+    color: white;
+}
+header .color-formats {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+header button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: fit-content;
+    border-radius: 30px;
+    padding: 4px 8px 4px 4px;
+    cursor: pointer;
+}
+header button svg {
+    width: 16px;
+    height: 16px;
+    stroke: oklch(from var(--user-color) l c h / 0.6);
+    stroke-width: 2px;
+    fill: none;
+}
+header button.clicked svg {
+    fill: var(--user-color)
+}
+header button:not(.clicked):hover svg {
+    fill: oklch(from var(--user-color) l c h / 0.1);
+}
+header button p {
+    font-size: 1rem;
+}
+
+/* ---------------------------------- root ---------------------------------- */
+
+.root {
+    display: grid;
+    grid-template-columns: 200px minmax(650px, 800px);
+    grid-template-rows: 1fr;
+    margin: 100px 10vw;
+}
+
+.left-controls {
+    grid-column: 1 / 2;
+}
+
+.middle-controls {
+    grid-column: 2 / 3;
+    display: grid;
+    grid-auto-rows: 100px;
+}
+.control-row,
+.row,
+.delete-button-row {
+    grid-auto-columns: minmax(40px, 100px);
+}
+.control-row {
+    display: grid;
+    grid-auto-flow: column;
+    justify-items: center;
+}
+.control-row .color-controls {
+    position: relative;
+    display: grid;
+    justify-items: center;
+}
+.control-row button svg,
+.delete-button-row button svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: oklch(0.923 0.012 20 / 0.5);
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 400ms var(--ease-end);
+}
+.control-row button:not(.max):hover svg,
+.delete-button-row button:hover svg {
+    stroke: oklch(0.923 0.012 20);
+    transition: stroke 200ms var(--ease-start);
+}
+.control-row button.max {
+    display: none;
+}
+.control-row input {
+    max-width: 70px;
+    aspect-ratio: 2 / 1;
+    border-radius: 5px;
+    padding: 4px;
+    font-size: 1.25rem;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.top-input-arrow-wrapper,
+.bottom-input-arrow-wrapper {
+    position: absolute;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    right: 0;
+    height: 25px;
+    width: 20px;
+    border-radius: 5px;
+}
+.top-input-arrow-wrapper {
+    top: -2px;
+    right: 4px;
+    height: 43px;
+}
+.bottom-input-arrow-wrapper {
+    right: 5px;
+    bottom: 19px;
+    height: 28px;
+}
+.up-arrow,
+.down-arrow {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: oklch(0.923 0.012 20 / 0.5);
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 400ms var(--ease-end);
+}
+.up-arrow:hover {
+    stroke: oklch(0.923 0.012 20);
+    transition: stroke 200ms var(--ease-start);
+}
+.down-arrow {
+    width: 24px;
+    height: 24px;
+    transform: rotate(180deg);
+}
+.down-arrow:hover {
+    stroke: oklch(0.923 0.012 20);
+    transition: stroke 200ms var(--ease-start);
+}
+.bottom-input-arrow-wrapper .up-arrow,
+.bottom-input-arrow-wrapper .down-arrow {
+    width: 20px;
+    height: 20px;
+}
+
+.control-row input.chroma {
+    max-width: 60px;
+    aspect-ratio: 3 / 1;
+    font-size: 1rem;
+}
+button.add-column {
+    width: 48px;
+    height: 48px;
+    border-radius: 5px;
+}
+
+.row {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+}
+
+.display {
+    position: relative;
+    grid-row: 2 / 3;
+    max-width: 100px;
+    aspect-ratio: 1 / 1;
+    background-color: var(--user-color);
+    border-bottom: 1px solid oklch(from var(--user-color) calc(l + 0.1) c h / 0.6);
+    border-top: 1px solid oklch(from var(--user-color) calc(l + 0.1) c h / 0.6);
+    box-shadow: 1px 2px 1px oklch(0% 0 0 / 0.3);
+}
+.row :first-child {
+    border-radius: 12px 0 0 12px;
+}
+.row :last-child  {
+    border-radius: 0 12px 12px 0;
+}
+.row :not(:first-child):not(:last-child) {
+    border-radius: 0;
+}
+.row :only-child {
+    border-radius: 12px;
+}
+
+.row input {
+    max-width: 150px;
+    height: 1.25rem;
+    border-radius: 5px;
+    padding: 4px;
+    color: #ede3df;
+}
+
+.delete-button-row {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-auto-flow: column;
+}
+.delete-button-row button {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    padding: 8px;
+}
