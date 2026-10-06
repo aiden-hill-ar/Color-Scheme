@@ -108,6 +108,10 @@ header button p {
 
 .left-controls {
     grid-column: 1 / 2;
+    display: grid;
+    grid-auto-rows: 100px;
+    justify-items: center;
+    align-items: center;
 }
 
 .middle-controls {
@@ -125,13 +129,14 @@ header button p {
     grid-auto-flow: column;
     justify-items: center;
 }
-.control-row .color-controls {
+.color-controls {
     position: relative;
     display: grid;
     justify-items: center;
 }
 .control-row button svg,
-.delete-button-row button svg {
+.delete-button-row button svg,
+.left-controls button svg {
     width: 24px;
     height: 24px;
     fill: none;
@@ -142,14 +147,16 @@ header button p {
     transition: stroke 400ms var(--ease-end);
 }
 .control-row button:not(.max):hover svg,
-.delete-button-row button:hover svg {
+.delete-button-row button:hover svg,
+.left-controls button:hover svg {
     stroke: oklch(0.923 0.012 20);
     transition: stroke 200ms var(--ease-start);
 }
 .control-row button.max {
     display: none;
 }
-.control-row input {
+.control-row input,
+.left-controls input {
     max-width: 70px;
     aspect-ratio: 2 / 1;
     border-radius: 5px;
@@ -221,7 +228,8 @@ input[type=number] {
     aspect-ratio: 3 / 1;
     font-size: 1rem;
 }
-button.add-column {
+button.add-column,
+button.add-row {
     width: 48px;
     height: 48px;
     border-radius: 5px;

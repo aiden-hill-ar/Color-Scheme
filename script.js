@@ -10,6 +10,9 @@ const deleteButtonRow = doc.querySelector(".delete-button-row");
 
 const ns = "http://www.w3.org/2000/svg";
 
+const middleControls = doc.querySelector(".middle-controls");
+let numOfRows;
+
 /* ---------------------------- precision buttons --------------------------- */
 
 const preciseButton = doc.querySelector(".precise");
@@ -71,49 +74,6 @@ function addColorControlColumn() {
     chromaInput.step = precision;
     colorControl.appendChild(chromaInput);
 
-    let inputArrows = doc.createElement("div");
-    inputArrows.classList.add("top-input-arrow-wrapper");
-    const path = doc.createElementNS(ns, "path");
-    path.setAttribute("d", "m18 15-6-6-6 6");
-    let path2 = doc.createElementNS(ns, "path");
-    path2.setAttribute("d", "m18 15-6-6-6 6");
-
-    let upArrow = doc.createElementNS(ns, "svg");
-    upArrow.setAttribute("viewbox", "0 0 24 24");
-    upArrow.classList.add("up-arrow");
-    upArrow.classList.add("arrow");
-    let downArrow = doc.createElementNS(ns, "svg");
-    downArrow.setAttribute("viewbox", "0 0 24 24");
-    downArrow.classList.add("down-arrow");
-    downArrow.classList.add("arrow");
-    upArrow.append(path);
-    downArrow.append(path2);
-    inputArrows.appendChild(upArrow);
-    inputArrows.appendChild(downArrow);
-
-    let inputArrows2 = doc.createElement("div");
-    inputArrows2.classList.add("bottom-input-arrow-wrapper");
-    const path3 = doc.createElementNS(ns, "path");
-    path3.setAttribute("d", "m15 14-4-4-4 4");
-    let path4 = doc.createElementNS(ns, "path");
-    path4.setAttribute("d", "m13 14-4-4-4 4");
-
-    let upArrow2 = doc.createElementNS(ns, "svg");
-    upArrow2.setAttribute("viewbox", "0 0 20 20");
-    upArrow2.classList.add("up-arrow");
-    upArrow2.classList.add("arrow");
-    let downArrow2 = doc.createElementNS(ns, "svg");
-    downArrow2.setAttribute("viewbox", "0 0 24 24");
-    downArrow2.classList.add("down-arrow");
-    downArrow2.classList.add("arrow");
-    upArrow2.append(path3);
-    downArrow2.append(path4);
-    inputArrows2.appendChild(upArrow2);
-    inputArrows2.appendChild(downArrow2);
-
-    colorControl.appendChild(inputArrows);
-    colorControl.appendChild(inputArrows2);
-
     colorControlRow.insertBefore(colorControl, colorControlRow.lastElementChild);
 };
 addColorControlColumn();
@@ -122,6 +82,7 @@ function addDisplayColumn() {
     let display = doc.createElement("div");
     display.classList.add("display");
     display.setAttribute("data-column", `${rows[0].childElementCount + 1}`)
+    display.setAttribute("data-row", `${numOfRows}`)
     rows.forEach(row => {
         row.appendChild(display.cloneNode(true));
     });
@@ -144,47 +105,32 @@ function addDeleteColumn() {
     deleteButtonRow.appendChild(deleteButton);
 }
 
-/* --------------------------- number input arrows -------------------------- */
+/* --------------------------------- add row -------------------------------- */
 
-colorControlRow.addEventListener("click", e => {
-    const arrow = e.target.closest(".arrow");
-    if (!arrow) return;
-    const arrowParent = arrow.parentElement;
-    let input;
-    let value;
-    if (arrow.parentElement.classList.contains("top-input-arrow-wrapper")) {
-        input = 0;
-        if (arrow.classList.contains("up-arrow")) {
-            value = "stepUp";
-        }
-        if (arrow.classList.contains("down-arrow")) {
-            value = "stepDown";
-        }
-    } else if (arrow.parentElement.classList.contains("bottom-input-arrow-wrapper")) {
-        input = 1;
-        if (arrow.classList.contains("up-arrow")) {
-            value = "stepUp";
-        }
-        if (arrow.classList.contains("down-arrow")) {
-            value = "stepDown";
-        }
-    }
-    if (input === 0) {
-        if (value === "stepUp") {
-            arrowParent.parentElement.children[0].stepUp(1);
-        } else {
-            arrowParent.parentElement.children[0].stepDown(1);
-        }
-    } else {
-        if (value === "stepUp") {
-            arrowParent.parentElement.children[1].stepUp(1);
-        } else {
-            arrowParent.parentElement.children[1].stepDown(1);
-        }
-    }
-});
+const leftControls = doc.querySelector(".left-controls");
 
-/* ---------------------------- add column button --------------------------- */
+function addColorControlRow() {
+    let colorControl = doc.createElement("div");
+    colorControl.classList.add("color-controls");
+    colorControl.setAttribute("data-column", `${0}`);
+    colorControl.setAttribute("data-column", `${numOfRows}`)
+
+    let hueInput = doc.createElement("input");
+    hueInput.type = "number";
+    hueInput.name = "hue";
+    hueInput.classList.add("hue");
+    hueInput.setAttribute("data-column", `${0}`);
+    hueInput.min = "0";
+    hueInput.max = "1";
+    hueInput.step = precision;
+    colorControl.appendChild(hueInput);
+
+
+    leftControls.insertBefore(colorControl, leftControls.lastElementChild);
+};
+addColorControlRow();
+
+/* ------------------------------- add column ------------------------------- */
 
 function addNewColumn() {
     // hide button after set amount of colors
@@ -202,7 +148,7 @@ addColumnButton.addEventListener("click", () => {
     addNewColumn();
 });
 
-/* -------------------------- remove column button -------------------------- */
+/* ------------------------------ remove column ----------------------------- */
 
 function adjustColumnShift(column, row) {
     let shiftChildren;
@@ -243,15 +189,25 @@ deleteButtonRow.addEventListener("click", e => {
     removeColumn(button.dataset.column);
 });
 
-/* ------------------------------- hsl to hex ------------------------------- */
+/* --------------------------------- add row -------------------------------- */
 
-function hslToHex(h, s, l) {
-  l /= 100;
-  const a = s * Math.min(l, 1 - l) / 100;
-  const f = n => {
-    const k = (n + h / 30) % 12;
-    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color).toString(16).padStart(2, '0');
-  };
-  return `#${f(8)}${f(4)}`;
-}
+function setNumOfRows() {
+    numOfRows = rows.length;
+};
+setNumOfRows();
+
+const addRowButton = doc.querySelector(".add-row");
+
+function addDisplayRow() {
+    let createdRow = doc.createElement("div");
+    createdRow.classList.add("row");
+
+    let rowDisplay = doc.createElement("div");
+    rowDisplay.setAttribute("data-column", "1");
+    rowDisplay.setAttribute("data-row", "2");
+    rowDisplay.classList.add("display");
+
+    createdRow.append(rowDisplay);
+    middleControls.insertBefore(createdRow, middleControls.lastElementChild);
+};
+addDisplayRow();
