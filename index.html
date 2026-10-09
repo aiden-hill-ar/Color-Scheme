@@ -15,20 +15,6 @@
             <p style="font-size: 1.5rem;">--- Presenting ---</p>
             <h1>The Color Scheme</h1>
             <p style="color: var(--user-color);">Created by Aiden Hill & Brandon Mathis</p>
-            <div class="color-formats">
-                <button class="precise clicked">
-                    <svg class="dot" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="8" cy="8" r="6" />
-                    </svg>
-                    <p>Precise</p>
-                </button>
-                <button class="wide">
-                    <svg class="dot" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="8" cy="8" r="6" />
-                    </svg>
-                    <p>Wide</p>
-                </button>
-            </div>
         </header>
 
         <div class="root">
@@ -51,7 +37,12 @@
                     </button>
                 </div>
                 <div class="row">
-                    <div class="display" data-column="1" data-row="1"></div>
+                    <div class="display" data-column="1" data-row="1">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                            <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                        </svg>
+                    </div>
                 </div>
                 <div class="delete-button-row">
                     <div></div>
@@ -59,6 +50,6 @@
             </div>
         </div>
     </div>
-    <script src="./script.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 </html>

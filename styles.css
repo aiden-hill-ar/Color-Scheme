@@ -11,7 +11,10 @@
     --dark-gray: oklch(0.254 0 242);
     --very-dark-gray: oklch(0.178 0 242);
 
-    --user-color: oklch(0.685 0.147 6);
+    --user-color: oklch(var(--lightness) var(--chroma) var(--hue));
+    --lightness: 0.685;
+    --chroma: 0.1;
+    --hue: 6;
 
     --ease-start: cubic-bezier(0.16, 1, 0.3, 1);
     --ease-end: cubic-bezier(0.32, 0, 0.67, 0);
@@ -120,7 +123,6 @@ header button p {
     grid-auto-rows: 100px;
 }
 .control-row,
-.row,
 .delete-button-row {
     grid-auto-columns: minmax(40px, 100px);
 }
@@ -134,9 +136,7 @@ header button p {
     display: grid;
     justify-items: center;
 }
-.control-row button svg,
-.delete-button-row button svg,
-.left-controls button svg {
+button svg{
     width: 24px;
     height: 24px;
     fill: none;
@@ -146,14 +146,9 @@ header button p {
     stroke-linejoin: round;
     transition: stroke 400ms var(--ease-end);
 }
-.control-row button:not(.max):hover svg,
-.delete-button-row button:hover svg,
-.left-controls button:hover svg {
+button:hover svg{
     stroke: oklch(0.923 0.012 20);
     transition: stroke 200ms var(--ease-start);
-}
-.control-row button.max {
-    display: none;
 }
 .control-row input,
 .left-controls input {
@@ -162,65 +157,6 @@ header button p {
     border-radius: 5px;
     padding: 4px;
     font-size: 1.25rem;
-}
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-input[type=number] {
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-.top-input-arrow-wrapper,
-.bottom-input-arrow-wrapper {
-    position: absolute;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    right: 0;
-    height: 25px;
-    width: 20px;
-    border-radius: 5px;
-}
-.top-input-arrow-wrapper {
-    top: -2px;
-    right: 4px;
-    height: 43px;
-}
-.bottom-input-arrow-wrapper {
-    right: 5px;
-    bottom: 19px;
-    height: 28px;
-}
-.up-arrow,
-.down-arrow {
-    width: 24px;
-    height: 24px;
-    fill: none;
-    stroke: oklch(0.923 0.012 20 / 0.5);
-    stroke-width: 2px;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: stroke 400ms var(--ease-end);
-}
-.up-arrow:hover {
-    stroke: oklch(0.923 0.012 20);
-    transition: stroke 200ms var(--ease-start);
-}
-.down-arrow {
-    width: 24px;
-    height: 24px;
-    transform: rotate(180deg);
-}
-.down-arrow:hover {
-    stroke: oklch(0.923 0.012 20);
-    transition: stroke 200ms var(--ease-start);
-}
-.bottom-input-arrow-wrapper .up-arrow,
-.bottom-input-arrow-wrapper .down-arrow {
-    width: 20px;
-    height: 20px;
 }
 
 .control-row input.chroma {
@@ -236,21 +172,40 @@ button.add-row {
 }
 
 .row {
-    display: grid;
-    grid-auto-flow: column;
+    display: flex;
     align-items: center;
 }
 
 .display {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-row: 2 / 3;
+    flex: 1;
     max-width: 100px;
     aspect-ratio: 1 / 1;
-    background-color: var(--user-color);
-    border-bottom: 1px solid oklch(from var(--user-color) calc(l + 0.1) c h / 0.6);
-    border-top: 1px solid oklch(from var(--user-color) calc(l + 0.1) c h / 0.6);
-    box-shadow: 1px 2px 1px oklch(0% 0 0 / 0.3);
+    background-color: oklch(var(--lightness) var(--chroma) var(--hue));
+    border-bottom: 1px solid oklch(var(--lightness) var(--chroma) var(--hue) / 0.6);
+    border-top: 1px solid oklch(var(--lightness) var(--chroma) var(--hue) / 0.6);
+    box-shadow: 1px 2px 1px oklch(var(--lightness - 0.2) var(--chroma * 0.5) var(--hue) / 0.3);
 }
+.display svg {
+    opacity: 0;
+    width: 24px;
+    height: 24px;
+    stroke: oklch(var(--lightness) var(--chroma) var(--hue));
+    fill: none;
+    border-radius: 50%;
+    padding: 4px;
+    background-color: #000a;
+    transition: opacity 300ms var(--ease-end);
+}
+.display:hover svg {
+    opacity: 1;
+    transition: opacity 300ms var(--ease-start);
+}
+/*
 .row :first-child {
     border-radius: 12px 0 0 12px;
 }
@@ -263,6 +218,7 @@ button.add-row {
 .row :only-child {
     border-radius: 12px;
 }
+*/
 
 .row input {
     max-width: 150px;
@@ -278,7 +234,8 @@ button.add-row {
     align-items: center;
     grid-auto-flow: column;
 }
-.delete-button-row button {
+.delete-button-row button,
+.delete-row {
     width: 24px;
     height: 24px;
     border-radius: 50%;
